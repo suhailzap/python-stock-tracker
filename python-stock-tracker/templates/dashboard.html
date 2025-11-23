@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QSE Real-time Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <meta http-equiv="refresh" content="5"> </head>
+<body class="bg-white">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">🇶🇦 QSE Live Tracker</a>
+        <span class="navbar-text ml-auto">
+            Welcome, {{ session['username'] }}! | <a href="{{ url_for('logout') }}" class="text-warning">Logout</a>
+        </span>
+    </nav>
+
+    <div class="container mt-5">
+        <h2 class="mb-4">Live Rates | Updated at {{ current_time }}</h2>
+        <div class="row">
+            {% for symbol, data in rates.items() %}
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm border-{{ data.color }}">
+                    <div class="card-header bg-{{ data.color }} text-white">
+                        <h5 class="mb-0">{{ data.name }} ({{ symbol }})</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h1 class="text-{{ data.color }} mb-0">QR {{ "%.2f"|format(data.rate) }}</h1>
+                            <span class="badge badge-pill badge-{{ data.color }} p-2">
+                                Change: {{ "%.2f"|format(data.change) }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
